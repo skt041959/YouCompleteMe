@@ -28,7 +28,6 @@ import json
 import logging
 import os
 import signal
-import vim
 from subprocess import PIPE
 from tempfile import NamedTemporaryFile
 from ycm import base, paths, vimsupport
@@ -106,7 +105,10 @@ HANDLE_FLAG_INHERIT = 0x00000001
 
 
 class YouCompleteMe( object ):
-  def __init__( self ):
+  def __init__( self, vim, logger ):
+    setattr(vimsupport, 'vim', vim)
+    self._vim = vim
+    self._logger = logger
     self._available_completers = {}
     self._user_options = None
     self._user_notified_about_crash = False
